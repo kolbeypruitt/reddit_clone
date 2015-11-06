@@ -1,8 +1,27 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+/*.postBox {
+  border-radius: 25px;
+  width: 940px;
+  height: 200px;
+  background-color: orange;
+  color: black;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  color: blue;
+}*/
 
-a {
-  color: #00B7FF;
+/*.col-md-10 {
+  border-radius: 25px;
+  background-color: lightgray;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  color: blue;
+  margin: 20px 20px
+}*/
+
+input[type="text"] {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  border-radius: 5px;
+
 }
