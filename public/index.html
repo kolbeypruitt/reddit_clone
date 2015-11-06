@@ -79,7 +79,7 @@
           <input type="text" ng-model='postObj.author'>
           <br>
           <label>Image URL:</label>
-          <input type="text" ng-model='postObj.image'>
+          <input type="url" ng-model='postObj.image'>
           <br>
           <label>Description:</label>
           <input type="text" ng-model='postObj.description'>
@@ -93,10 +93,24 @@
       <div class='col-md-10'>
         <div class='postBox' ng-repeat="post in allPosts">
           <div class="jumbotron">
-            <h3>{{post.title}} |
-            <a ng-class="upVote()"><span class="glyphicon glyphicon-arrow-up"></span></a>
-            <a ng-class="downVote()"><span class="glyphicon glyphicon-arrow-down"></span></a>
-            </h3>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-3">
+                  <img ng-if="true" class='postImage' ng-src="{{post.image}}">
+                </div>
+                <div class="col-md-9">
+                  <h3 class="postTitle">{{post.title}} |
+                  <a ng-class="upVote()"><span class="glyphicon glyphicon-arrow-up"></span></a>
+                  <a ng-class="downVote()"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                  <span ng-init="post.votes='0'">{{post.votes}}</span>
+                  <span class="float-right"><p>By {{post.author}}</p></span>
+                  </h3>
+                  <p>{{post.description}}</p>
+                  <p class='glyphicon glyphicon-calendar'>{{post.rightNow | date: 'EEEE, MMMM d, y h:mm a'}}</p>
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
 

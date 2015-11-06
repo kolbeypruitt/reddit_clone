@@ -1,23 +1,20 @@
 var app = angular.module("redditApp", []);
 app.controller("PostController", function($scope){
-  // $scope.allPosts = ["Severus Snape","Harry Potter", "Ron Weasley"];
   $scope.allPosts = [];
-  $scope.postObj = {};
   $scope.newPost = function () {
+    var d = new Date();
+    $scope.postObj.rightNow = d.getTime();
     $scope.allPosts.push($scope.postObj);
     $scope.postObj = {};
   }
+
+  $scope.rightNow = function () {
+    var d = new Date();
+    $scope.postObj.rightNow = d.getTime();
+  }
+  // $scope.vote = function (direction) {
+  //   if (direction==='up') {
+
+  //   }
+  // }
 });
-
-
-// $scope.newContact = {};
-//     $scope.contacts = [];
-//     $scope.addContact = function () {
-//       $scope.contacts.push($scope.newContact);
-//       $scope.newContact = {};
-//     }
-//     $scope.search = function () {
-//       for (var i = 0; i < $scope.contacts.length; i++) {
-//         $scope.contacts[i]
-//       }
-//     }
