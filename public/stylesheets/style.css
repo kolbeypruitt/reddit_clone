@@ -16,7 +16,6 @@ input {
   margin-bottom: 15px;
   width: 100%;
   border-radius: 5px;
-
 }
 
 .float-right {
@@ -27,4 +26,12 @@ input {
   width: 150px;
   height: 150px;
   border-radius: 20px;
+}
+
+.posVotes {
+  color: green;
+}
+
+.negVotes {
+  color: red;
 }
