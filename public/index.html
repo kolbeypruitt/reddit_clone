@@ -43,12 +43,17 @@
           </ul>
           <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
+              <input type="text" class="form-control" placeholder="Search" ng-model="searchQuery">
             </div>
           </form>
           <ul class="nav navbar-nav navbar-center">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort Posts By<span class="caret"></span></a>
+              <select name="" id="" ng-model="sortBy">
+                <option value="votes">Votes</option>
+                <option value="post.allComments.length">Comments</option>
+                <option value="rightNow">Date Posted</option>
+              </select>
               <ul class="dropdown-menu">
                 <li><a href="#">Votes</a></li>
                 <li><a href="#">Comments</a></li>
@@ -86,12 +91,12 @@
           <br>
           <button ng-click="newPost()">Submit</button>
         </div>
-        <div class='col-md-1'>
-      </div> 
+<!--         <div class='col-md-1'>
+      </div>  -->
       </div>
       <div class='row'>
-      <div class='col-md-10'>
-        <div class='postBox' ng-repeat="post in allPosts">
+      <div class='col-md-12'>
+        <div class='postBox' ng-repeat="post in allPosts | filter:searchQuery | orderBy:sortBy">
           <div class="jumbotron">
             <div class="container">
               <div class="row">
@@ -106,27 +111,48 @@
                   <span class="float-right"><p>By {{post.author}}</p></span>
                   </h3>
                   <p>{{post.description}}</p>
-                  <p class='glyphicon glyphicon-calendar'> {{post.rightNow | date: 'h:mm a'}} | 
-                    <span class="glyphicon glyphicon-comment"> Comment | 
-                    </span>
-                    <span ng-click="addComment()" class="glyphicon glyphicon-pencil"> Add Comment</span>
+                  <p class='glyphicon glyphicon-calendar'>
+                  <time title="{{ post.rightNow | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ post.rightNow | amCalendar }}</time>
+                    <span ng-click="toggleComments()" class="glyphicon glyphicon-comment noIbar">   {{post.allComments.length}}
+                      <ng-pluralize count="post.allComments.length" when="{ '1': 'comment', 'other': 'comments'}" offset=""></ng-pluralize>
+                      </span>
+                    <span ng-click="showNewComment=true" class="glyphicon glyphicon-pencil noIbar"> Add Comment</span>
                   </p>
+                  <div ng-show='showNewComment' class='col-md-10'>
+                  <form name="form" novalidate>
+                    <label>Author:</label>
+                    <input type="text" ng-model='author' required>
+                    <br>
+                    <label>Comment:</label>
+                    <input type="text" ng-model='body' required>
+                    <br>
+                    <button ng-disabled="form.$invalid" ng-click="newComment(post, author, body)">Submit</button>
+                  </form>
+                  </div>
+                  <div ng-show="commentsShown" ng-repeat="comment in post.allComments">
+                    <h4>{{comment.author}} <small>{{comment.body}}</small></h4>
+                    <br>
+                  </div>
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
-
       </div> 
-      <div class='col-md-1'>
-      </div> 
+<!--       <div class='col-md-1'>
+      </div>  -->
       </div>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <!-- load momentJS (required for angular-moment) -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+
+    <!-- load angular-moment -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
     <script src="/javascripts/app.js"></script>
+    <script src="/javascripts/filters.js"></script>
   </body>
 </html>

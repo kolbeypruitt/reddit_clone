@@ -35,3 +35,17 @@ input {
 .negVotes {
   color: red;
 }
+
+.noIbar {
+cursor:default;
+}
+
+.noIbar:hover {
+cursor:default;
+color: #27557E;
+}
+
+.glyphicon {
+letter-spacing: 1px;
+word-spacing: -10px;
+}

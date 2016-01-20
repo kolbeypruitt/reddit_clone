@@ -1,13 +1,14 @@
-var app = angular.module("redditApp", []);
+var app = angular.module("redditApp", ['angularMoment']);
 app.controller("PostController", function($scope){
   $scope.allPosts = [];
   $scope.newPost = function () {
-    var d = new Date();
-    $scope.postObj.votes = 0;
-    $scope.showNewPost = false;
-    $scope.postObj.rightNow = d.getTime();
-    $scope.allPosts.push($scope.postObj);
-    $scope.postObj = {};
+    this.postObj.votes = 0;
+    this.showNewPost = false;
+    this.commentsShown = false;
+    this.postObj.rightNow = Date.now();
+    this.postObj.allComments = [];
+    this.allPosts.push(this.postObj);
+    this.postObj = {};
   }
 
   $scope.rightNow = function () {
@@ -15,9 +16,27 @@ app.controller("PostController", function($scope){
     $scope.postObj.rightNow = d.getTime();
   }
 
-  // $scope.addComment = function () {
-  //   $scope.post.
-  // }
+  $scope.toggleComments = function () {
+    if (this.commentsShown===true) {
+      this.commentsShown = false;
+    } else if (this.commentsShown===false) {
+      this.commentsShown = true;
+    }
+  }
+  
+  $scope.newComment = function (post, a, c) {
+    console.log(post);
+    this.showNewComment = false;
+    this.commentsShown = true;
+    commentObj = {
+      'author': a,
+      'body': c
+    }
+    post.allComments.push(commentObj);
+    this.author = null;
+    this.body = null;
+  }
+
   $scope.vote = function (direction) {
     if (direction==='up') {
       this.post.votes += 1;
