@@ -1,6 +1,8 @@
 var app = angular.module("redditApp", ['angularMoment']);
-app.controller("PostController", function($scope){
-  $scope.allPosts = [];
+app.controller("PostController", function($scope, $http){
+  $scope.allPosts = $http.get('/api/v1/posts').then(function (response) {
+    $scope.allPosts = response.data;
+  })
   $scope.newPost = function () {
     this.postObj.votes = 0;
     this.showNewPost = false;
@@ -8,7 +10,12 @@ app.controller("PostController", function($scope){
     this.postObj.rightNow = Date.now();
     this.postObj.allComments = [];
     this.allPosts.push(this.postObj);
-    this.postObj = {};
+    return $http.post('/api/v1/posts', this.postObj ).then(function (post) {
+      this.postObj = {};
+      $http.get('/api/v1/posts').then(function (response) {
+        $scope.allPosts = response.data;
+      })
+    })
   }
 
   $scope.rightNow = function () {
